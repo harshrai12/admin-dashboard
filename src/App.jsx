@@ -3,7 +3,7 @@ import './App.css'
 import axios from 'axios';
 
 import Navbar from './Components/Navbar';
-import Userlist from './Components/userlist';
+import Userlist from './Components/Userlist.jsx';
 
 
 function App() {
