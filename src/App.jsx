@@ -9,6 +9,21 @@ import Userlist from './Components/Userlist.jsx';
 function App() {
   const [search,setSearch] = useState("");//serach state
   const [api,setapi]= useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
+   function handeleselectedDelete(){
+    console.log("alldeletebutton")
+    const selectedIds = selectedRows;
+
+    // Filter the api state to exclude the selected rows
+    const updatedApi = api.filter((item) => !selectedIds.includes(item.id));
+
+    // Update the api state with the modified array
+    setapi(updatedApi);
+
+    // Clear the selectedRows state
+    setSelectedRows([]);
+   }
+   
   async function deleterow(id){
     const filteredarr =api.filter((item)=>item.id!==id)
     setapi(filteredarr);
@@ -32,8 +47,8 @@ function App() {
   return (
     <>
       <div className="app">
-      <Navbar search={search} setSearch={setSearch}/>
-      <Userlist search={search} api={api} setapi={setapi} deleterow={deleterow}/>
+      <Navbar search={search} setSearch={setSearch} handeleselectedDelete={handeleselectedDelete} selectedRows={selectedRows}/>
+      <Userlist search={search} api={api} setapi={setapi} deleterow={deleterow} handeleselectedDelete={handeleselectedDelete} setSelectedRows={setSelectedRows} selectedRows={selectedRows}/>
       </div>
     </>
   )

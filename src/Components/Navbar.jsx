@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { MdDeleteOutline } from "react-icons/md";
 
-function Navbar({search,setSearch}) {
+function Navbar({search,setSearch,handeleselectedDelete}) {
   const [input,setInput]= useState("");
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -16,7 +16,7 @@ function Navbar({search,setSearch}) {
       <input type="text" placeholder='Enter value' value={input} onChange={(e)=>setInput(e.target.value)}  onKeyDown={handleKeyDown}/>
       </div>
       <div className="delete">
-      <button className='delete-selected'><MdDeleteOutline color='white' size='20' /></button>
+      <button onClick={()=>handeleselectedDelete()} className='delete-selected'><MdDeleteOutline color='white' size='20' /></button>
       </div>
     </div>
   )

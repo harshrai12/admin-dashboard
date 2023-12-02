@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaRegEdit } from 'react-icons/fa';
 
-function UserTable({ api, search, deleterow, setapi6 }) {
+function UserTable({ api, search, deleterow, setapi,handeleselectedDelete,setSelectedRows,selectedRows={selectedRows} }) {
   const [editableRowId, setEditableRowId] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8); 
-
+  const [itemsPerPage] = useState(10); 
+ 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = api
@@ -20,6 +20,8 @@ function UserTable({ api, search, deleterow, setapi6 }) {
         item.role.toLowerCase().includes(search.toLowerCase())
     )
     .slice(indexOfFirstItem, indexOfLastItem);
+
+
 
   const handleEdit = (itemId) => {
     setEditableRowId(itemId);
@@ -57,13 +59,34 @@ function UserTable({ api, search, deleterow, setapi6 }) {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
+  const handleRadioSelect = (itemId) => {
+    if (itemId === 'selectAll') {
+      const allVisibleRowIds = currentItems.map((item) => item.id);
+      setSelectedRows((prevSelectedRows) =>
+        prevSelectedRows.length === allVisibleRowIds.length ? [] : allVisibleRowIds
+      );
+    } else {
+      setSelectedRows((prevSelectedRows) => {
+        if (prevSelectedRows.includes(itemId)) {
+          return prevSelectedRows.filter((id) => id !== itemId);
+        } else {
+          return [...prevSelectedRows, itemId];
+        }
+      });
+    }
+  };
+
   return (
     <div>
       <table className="user-table">
         <thead>
           <tr>
             <th>
-              <input type="radio" value="" />
+            <input
+            type="checkbox"
+            checked={selectedRows.length === currentItems.length && currentItems.length > 0}
+            onChange={() => handleRadioSelect('selectAll')}
+          />
             </th>
             <th>Name</th>
             <th>Email</th>
@@ -73,9 +96,13 @@ function UserTable({ api, search, deleterow, setapi6 }) {
         </thead>
         <tbody>
           {currentItems.map((item) => (
-            <tr className='container' key={item.id}>
+            <tr  style={{ backgroundColor: selectedRows.includes(item.id) ? '#f2f2f2' : 'transparent' }} className='container' key={item.id}>
               <td>
-                <input type="radio" value="" />
+              <input
+              type="checkbox"
+              checked={selectedRows.includes(item.id)}
+              onChange={() => handleRadioSelect(item.id)}
+            />
               </td>
               <td>{editableRowId === item.id ? <input type="text" value={name === "" ? item.name : name} onChange={(e) => setName(e.target.value)} /> : item.name}</td>
               <td>{editableRowId === item.id ? <input type="text" value={email === "" ? item.email : email} onChange={(e) => setEmail(e.target.value)} /> : item.email}</td>
@@ -102,12 +129,24 @@ function UserTable({ api, search, deleterow, setapi6 }) {
         </tbody>
       </table>
       <div className="pagination">
-        <button onClick={handlePrevPage} disabled={currentPage === 1}>
-          Prev
+      <div className="pagination">
+      <button onClick={handlePrevPage} disabled={currentPage === 1}>
+        Prev
+      </button>
+      {Array.from({ length: Math.ceil(api.length / itemsPerPage) }, (_, index) => (
+        <button
+          key={index + 1}
+          onClick={() => setCurrentPage(index + 1)}
+          disabled={currentPage === index + 1}
+        >
+          {index + 1}
         </button>
-        <button onClick={handleNextPage} disabled={currentItems.length < itemsPerPage}>
-          Next
-        </button>
+      ))}
+      <button onClick={handleNextPage} disabled={currentItems.length < itemsPerPage}>
+        Next
+      </button>
+    </div>
+    
       </div>
     </div>
   );
