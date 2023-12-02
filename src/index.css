@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost&family=Montserrat:wght@200&family=Poppins:wght@100;200;500;700&display=swap');
+
+*{
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* .row{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  background-color: ;
+
+  
+}
+
+.row p{
+  display: flex;
+  justify-content: flex-start;
+  background-color: #c67878;
+  width: 200px;
+  margin-left:20px;
+} */
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left; /* Set text alignment to left */
+}
+
+.user-table th{
+  color: #4c637d;
+  font-weight: normal;
+}
+
+.user-table td{
+  color: #232222;
+  font-weight: 400;
+}
+
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.delete-selected{
+  background-color: rgb(227, 41, 41);
+  border-radius: 10px;
+  padding: 10px;
+  border: 0;
+
+}
+.action{
+  display: flex;
+  gap:30px;
+  justify-content: center;
+}
+
+.action button{
+  background-color: rgb(229, 226, 226);
+  border-radius: 5px;
+  padding: 10px;
+  border: 0;
+}
+
+.search input{
+  border-color: #dedbdb;
+
+  padding: 10px;
+  border-radius: 10px;
+  width:250px;
+ 
+}
