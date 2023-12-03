@@ -129,7 +129,7 @@ function UserTable({ api, search, deleterow, setapi,handeleselectedDelete,setSel
         </tbody>
       </table>
       <div className="pagination">
-      <div className="pagination">
+     
       <button onClick={handlePrevPage} disabled={currentPage === 1}>
         Prev
       </button>
@@ -147,7 +147,6 @@ function UserTable({ api, search, deleterow, setapi,handeleselectedDelete,setSel
       </button>
     </div>
     
-      </div>
     </div>
   );
 }
